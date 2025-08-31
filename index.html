@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Para mi amor 💖</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: pink; /* Fondo rosado */
+      color: white;
+      text-align: center;
+      padding: 20px;
+      overflow: hidden; /* para que los corazones no hagan scroll */
+    }
+
+    /* Fondo de corazones */
+    .corazon-fondo {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(-45deg);
+      animation: flotar 8s linear infinite;
+      opacity: 0.8;
+      z-index: 0;
+    }
+
+    .corazon-fondo::before,
+    .corazon-fondo::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+    .corazon-fondo::before {
+      top: -10px;
+      left: 0;
+    }
+    .corazon-fondo::after {
+      top: 0;
+      left: 10px;
+    }
+
+    @keyframes flotar {
+      0% {
+        transform: translateY(100vh) rotate(-45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) rotate(-45deg);
+        opacity: 0;
+      }
+    }
+
+    /* Mensaje */
+    .mensaje {
+      position: relative;
+      z-index: 1; /* que quede encima del fondo */
+      background: rgba(0,0,0,0.6);
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 700px;
+      margin: auto;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    /* Corazón animado */
+    .corazon {
+      color: red;
+      font-size: 50px;
+      animation: latir 1s infinite;
+      margin: 15px 0;
+    }
+
+    @keyframes latir {
+      0% { transform: scale(1); }
+      25% { transform: scale(1.2); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    /* Carrusel */
+    .carrusel {
+      position: relative;
+      width: 250px;
+      height: 350px;
+      margin: 40px auto;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(255,255,255,0.6);
+      z-index: 1; /* encima de los corazones */
+    }
+
+    .carrusel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .carrusel img.active {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Corazones flotando -->
+  <div class="corazon-fondo" style="left:10%; animation-delay: 0s;"></div>
+  <div class="corazon-fondo" style="left:30%; animation-delay: 2s;"></div>
+  <div class="corazon-fondo" style="left:50%; animation-delay: 4s;"></div>
+  <div class="corazon-fondo" style="left:70%; animation-delay: 1s;"></div>
+  <div class="corazon-fondo" style="left:90%; animation-delay: 3s;"></div>
+
+  <!-- Texto -->
+  <div class="mensaje">
+    <p>
+      Te amo mucho mi vida, la verdad nunca me imaginé enamorarme de esta manera.  
+      Como te dije una vez, yo sabía que una persona especial iba a llegar a mi vida  
+      y con el pasar del tiempo llegó sin darme cuenta.  
+      Ahora mismo estoy al frente de ella.  
+      Te amo mucho mi amor y quiero estar a tu lado mucho tiempo más ❤️
+    </p>
+    <div class="corazon">❤️</div>
+  </div>
+
+  <!-- Carrusel de fotos -->
+  <div class="carrusel">
+    <img src="08C60F27-EE46-4EC3-985E-E39AA08EB8CB.jpeg" class="active" alt="foto1">
+    <img src="998E6418-5BFE-4C91-82B5-B498781CA361.jpeg" alt="foto2">
+    <img src="1755CB90-AB8B-4AB6-9816-E381E2F9F2E3.jpeg" alt="foto3">
+  </div>
+
+  <!-- Música -->
+  <audio id="musica" autoplay loop muted hidden>
+    <source src="musica.mp3" type="audio/mpeg">
+    Tu navegador no soporta el audio.
+  </audio>
+
+  <script>
+    // Script para el carrusel automático
+    let index = 0;
+    const fotos = document.querySelectorAll('.carrusel img');
+
+    function mostrarFoto() {
+      fotos.forEach((foto, i) => {
+        foto.classList.remove('active');
+        if (i === index) {
+          foto.classList.add('active');
+        }
+      });
+      index = (index + 1) % fotos.length;
+    }
+
+    setInterval(mostrarFoto, 3000); // cambia cada 3 segundos
+
+    // Música con fade in
+    const musica = document.getElementById("musica");
+
+    document.addEventListener("click", () => {
+      musica.muted = false;
+      musica.volume = 0; // empieza bajito
+      musica.play();
+
+      let vol = 0;
+      const fade = setInterval(() => {
+        if (vol < 1) {
+          vol += 0.05; // sube poco a poco
+          musica.volume = vol;
+        } else {
+          clearInterval(fade);
+        }
+      }, 200); // cada 200ms sube un poco
+    }, { once: true });
+  </script>
+
+</body>
+</html>
+
+
